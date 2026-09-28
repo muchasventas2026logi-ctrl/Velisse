@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velisse | Tienda Online</title>
+    <meta name="description" content="Tienda de ropa y moda operada por FUNDACIÓN CORAZÓN DE CAÑA, NIT 901670559-7. Cali, Colombia.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #fffafb; color: #4a4a4a; }
+        .font-display { font-family: 'Playfair Display', serif; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #fffafb; }
+        ::-webkit-scrollbar-thumb { background: #e5989b; }
+        
+        /* Efecto suave para fondo */
+        .bg-soft-pattern {
+            background-color: #fffafb;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e5989b' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-pink': '#e5989b',
+                        'brand-pink-light': '#ffb5a7',
+                        'brand-pink-dark': '#b56576',
+                        'brand-dark': '#2b2d42',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Meta Pixel (Estructura Transparente Meta Ads) -->
+    <script>
+      const PIXEL_ID = ""; 
+      if(PIXEL_ID) {
+          !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+          function initPixel() {
+              if(localStorage.getItem('cookie_consent_ads') === 'true') {
+                  fbq('init', PIXEL_ID);
+                  fbq('track', 'PageView');
+              }
+          }
+          initPixel();
+      }
+    </script>
+</head>
+<body class="antialiased bg-soft-pattern" x-data="{ showTerms: false, showPrivacy: false, showCookieBanner: !localStorage.getItem('cookie_consent'), mobileMenuOpen: false }">
+
+    <!-- BARRA LEGAL META ADS (Transparencia) -->
+    <div class="bg-brand-pink-dark text-white text-[11px] sm:text-xs py-2 px-4 text-center tracking-wide font-medium">
+        Velisse es una tienda operada por FUNDACIÓN CORAZÓN DE CAÑA, NIT 901670559-7, con domicilio en CL 58 NORTE # 3 - 15, Cali - Valle.
+    </div>
+
+    <!-- HEADER / NAVEGACIÓN LANDING -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-40 border-b border-pink-100 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24 py-2">
+                <!-- LOGO -->
+                <a href="#" class="flex items-center shrink-0">
+                    <img src="LOGO.png" alt="Velisse" class="h-16 sm:h-20 w-auto object-contain">
+                </a>
+                
+                <!-- MENU DESKTOP -->
+                <nav class="hidden lg:flex space-x-8 mx-auto">
+                    <a href="#" class="text-brand-dark text-sm font-semibold uppercase tracking-wider hover:text-brand-pink transition">Inicio</a>
+                    <a href="#oferta" class="text-brand-dark text-sm font-semibold uppercase tracking-wider hover:text-brand-pink transition">Colección</a>
+                    <a href="#nosotros" class="text-brand-dark text-sm font-semibold uppercase tracking-wider hover:text-brand-pink transition">Nosotros</a>
+                    <a href="#contacto" class="text-brand-dark text-sm font-semibold uppercase tracking-wider hover:text-brand-pink transition">Contacto</a>
+                </nav>
+
+                <!-- CTA & MENU MOVIL TOGGLE -->
+                <div class="flex items-center gap-4 shrink-0">
+                    <a href="#contacto" class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold rounded-full text-white bg-brand-pink hover:bg-brand-pink-dark transition uppercase shadow-md shadow-pink-200">
+                        Hacer Pedido
+                    </a>
+                    
+                    <!-- Botón Hamburguesa -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden text-brand-dark p-2 focus:outline-none">
+                        <svg x-show="!mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg x-show="mobileMenuOpen" style="display: none;" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL MENU MOVIL -->
+        <div x-show="mobileMenuOpen" style="display: none;" class="lg:hidden bg-white border-t border-pink-100 px-4 py-4 space-y-3 absolute w-full z-40 shadow-2xl">
+            <a @click="mobileMenuOpen = false" href="#" class="block text-brand-dark font-semibold uppercase py-2 border-b border-pink-50">Inicio</a>
+            <a @click="mobileMenuOpen = false" href="#oferta" class="block text-brand-dark font-semibold uppercase py-2 border-b border-pink-50">Colección</a>
+            <a @click="mobileMenuOpen = false" href="#nosotros" class="block text-brand-dark font-semibold uppercase py-2 border-b border-pink-50">Nosotros</a>
+            <a @click="mobileMenuOpen = false" href="#contacto" class="block text-brand-dark font-semibold uppercase py-2 border-b border-pink-50">Contacto</a>
+            <a @click="mobileMenuOpen = false" href="#contacto" class="block text-center mt-4 px-4 py-3 bg-brand-pink text-white font-bold rounded-full uppercase shadow-md">Hacer Pedido</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden bg-gradient-to-b from-white to-pink-50/50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <!-- Textos Hero -->
+                <div class="text-center lg:text-left">
+                    <div class="inline-block bg-pink-100 text-brand-pink-dark text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest mb-6">Nueva Colección Exclusiva</div>
+                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-display font-bold text-brand-dark mb-6 leading-[1.1]">
+                        TU ESTILO.<br>
+                        <span class="text-brand-pink italic">TU ESENCIA.</span><br>
+                        TU BELLEZA.
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8 max-w-lg mx-auto lg:mx-0 font-light">
+                        Descubre prendas exclusivas y moda premium para resaltar tu belleza. Diseños únicos, elegantes y de la mejor calidad.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#oferta" class="px-8 py-4 text-base font-bold rounded-full text-white bg-brand-pink hover:bg-brand-pink-dark transition uppercase text-center w-full sm:w-auto shadow-lg shadow-pink-200">
+                            Ver Productos
+                        </a>
+                        <a href="#contacto" class="px-8 py-4 text-base font-bold rounded-full text-brand-pink-dark border-2 border-brand-pink-dark hover:bg-brand-pink-dark hover:text-white transition uppercase text-center w-full sm:w-auto bg-transparent">
+                            Hacer Pedido
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Imagen Hero -->
+                <div class="relative w-full max-w-md mx-auto lg:max-w-none">
+                    <div class="aspect-[4/5] bg-pink-50 rounded-2xl overflow-hidden shadow-2xl relative border-4 border-white">
+                        <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=80" alt="Moda Femenina Velisse" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Decoración -->
+                    <div class="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-brand-pink-light/30 blur-[80px] rounded-full"></div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST BAR -->
+    <section class="border-y border-pink-100 bg-white">
+        <div class="max-w-6xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-sm font-semibold uppercase tracking-wider text-brand-dark">
+                <div class="flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-pink-50 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-brand-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" /></svg>
+                    </div>
+                    <span>Envíos a<br>Colombia</span>
+                </div>
+                <div class="flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-pink-50 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-brand-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    </div>
+                    <span>Pago Contraentrega<br><span class="text-[9px] text-gray-500 normal-case">(Cuando aplique)</span></span>
+                </div>
+                <div class="flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-pink-50 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-brand-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    </div>
+                    <span>Atención<br>Directa</span>
+                </div>
+                <div class="flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-pink-50 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-brand-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                    </div>
+                    <span>Compra<br>Segura</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTOS DESTACADOS (OFERTA) -->
+    <section id="oferta" class="py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl font-display font-bold text-brand-dark mb-4">La Colección</h2>
+                <div class="w-20 h-1 bg-brand-pink mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- PRODUCTO 1 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-pink-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group">
+                    <div class="aspect-[4/5] overflow-hidden relative bg-gray-50">
+                        <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80" alt="Vestido Elegante" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-brand-dark mb-2">Vestido Elegante Rose</h3>
+                        <div class="text-2xl font-display text-brand-pink-dark mb-4">$ 85.000 COP</div>
+                        <div class="flex gap-2 mb-6">
+                            <span class="bg-pink-50 text-brand-pink-dark text-xs px-2 py-1 rounded font-semibold">TALLAS: S-M-L</span>
+                        </div>
+                        <a href="#contacto" class="block w-full bg-brand-dark text-white text-center font-bold py-3 rounded-full hover:bg-black transition uppercase text-sm">Lo Quiero</a>
+                    </div>
+                </div>
+
+                <!-- PRODUCTO 2 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-pink-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group">
+                    <div class="aspect-[4/5] overflow-hidden relative bg-gray-50">
+                        <img src="https://images.unsplash.com/photo-1551163943-3f6a855d1153?auto=format&fit=crop&w=600&q=80" alt="Blusa Seda" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-brand-dark mb-2">Blusa Seda Classic</h3>
+                        <div class="text-2xl font-display text-brand-pink-dark mb-4">$ 65.000 COP</div>
+                        <div class="flex gap-2 mb-6">
+                            <span class="bg-pink-50 text-brand-pink-dark text-xs px-2 py-1 rounded font-semibold">TALLAS: S-M-L</span>
+                        </div>
+                        <a href="#contacto" class="block w-full bg-brand-dark text-white text-center font-bold py-3 rounded-full hover:bg-black transition uppercase text-sm">Lo Quiero</a>
+                    </div>
+                </div>
+
+                <!-- PRODUCTO 3 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-pink-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group">
+                    <div class="aspect-[4/5] overflow-hidden relative bg-gray-50">
+                        <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=600&q=80" alt="Conjunto Floral" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-brand-dark mb-2">Vestido Floral Midi</h3>
+                        <div class="text-2xl font-display text-brand-pink-dark mb-4">$ 95.000 COP</div>
+                        <div class="flex gap-2 mb-6">
+                            <span class="bg-pink-50 text-brand-pink-dark text-xs px-2 py-1 rounded font-semibold">TALLAS: S-M-L</span>
+                        </div>
+                        <a href="#contacto" class="block w-full bg-brand-dark text-white text-center font-bold py-3 rounded-full hover:bg-black transition uppercase text-sm">Lo Quiero</a>
+                    </div>
+                </div>
+                
+                <!-- PRODUCTO 4 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-pink-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group">
+                    <div class="aspect-[4/5] overflow-hidden relative bg-gray-50">
+                        <img src="https://images.unsplash.com/photo-1521312384666-4f46ff361414?auto=format&fit=crop&w=600&q=80" alt="Chaqueta Denim" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-brand-dark mb-2">Chaqueta Denim Soft</h3>
+                        <div class="text-2xl font-display text-brand-pink-dark mb-4">$ 130.000 COP</div>
+                        <div class="flex gap-2 mb-6">
+                            <span class="bg-pink-50 text-brand-pink-dark text-xs px-2 py-1 rounded font-semibold">TALLAS: M-L-XL</span>
+                        </div>
+                        <a href="#contacto" class="block w-full bg-brand-dark text-white text-center font-bold py-3 rounded-full hover:bg-black transition uppercase text-sm">Lo Quiero</a>
+                    </div>
+                </div>
+
+                <!-- PRODUCTO 5 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-pink-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group">
+                    <div class="aspect-[4/5] overflow-hidden relative bg-gray-50">
+                        <img src="https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=600&q=80" alt="Bolso Premium" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-brand-dark mb-2">Bolso Premium Nude</h3>
+                        <div class="text-2xl font-display text-brand-pink-dark mb-4">$ 75.000 COP</div>
+                        <div class="flex gap-2 mb-6">
+                            <span class="bg-pink-50 text-brand-pink-dark text-xs px-2 py-1 rounded font-semibold">COLOR: NUDE</span>
+                        </div>
+                        <a href="#contacto" class="block w-full bg-brand-dark text-white text-center font-bold py-3 rounded-full hover:bg-black transition uppercase text-sm">Lo Quiero</a>
+                    </div>
+                </div>
+
+                <!-- PRODUCTO 6 -->
+                <div class="bg-white rounded-2xl overflow-hidden border border-pink-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 group">
+                    <div class="aspect-[4/5] overflow-hidden relative bg-gray-50">
+                        <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80" alt="Accesorios Gold" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-brand-dark mb-2">Set Accesorios Gold</h3>
+                        <div class="text-2xl font-display text-brand-pink-dark mb-4">$ 45.000 COP</div>
+                        <div class="flex gap-2 mb-6">
+                            <span class="bg-pink-50 text-brand-pink-dark text-xs px-2 py-1 rounded font-semibold">TALLA: ÚNICA</span>
+                        </div>
+                        <a href="#contacto" class="block w-full bg-brand-dark text-white text-center font-bold py-3 rounded-full hover:bg-black transition uppercase text-sm">Lo Quiero</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Banner Combo Promocional -->
+            <div class="mt-20 bg-brand-pink-light/20 border border-brand-pink-light rounded-3xl p-10 sm:p-14 text-center relative overflow-hidden">
+                <div class="relative z-10">
+                    <h3 class="text-3xl sm:text-4xl font-display font-bold text-brand-dark mb-4">Arma Tu Outfit Ideal</h3>
+                    <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">Encuentra opciones diseñadas para combinar perfectamente. Llévate más de una prenda con un precio especial.</p>
+                    <a href="#contacto" class="inline-block bg-brand-pink-dark text-white px-8 py-4 font-bold rounded-full hover:bg-brand-dark transition shadow-xl">Ver Opciones y Ofertas</a>
+                </div>
+                <!-- Círculos decorativos -->
+                <div class="absolute -right-10 -top-10 w-48 h-48 bg-white opacity-40 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="absolute -left-10 -bottom-10 w-48 h-48 bg-brand-pink opacity-20 rounded-full blur-2xl pointer-events-none"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOSOTROS Y FAQ -->
+    <section id="nosotros" class="py-24 bg-pink-50 border-y border-pink-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            
+            <!-- Nosotros -->
+            <div>
+                <h2 class="text-3xl sm:text-4xl font-display font-bold text-brand-dark mb-6">Diseñado para ti</h2>
+                <div class="text-gray-700 space-y-4 mb-8 font-light text-lg">
+                    <p>Velisse nace de la pasión por la moda, ofreciendo prendas cuidadosamente seleccionadas que destacan la elegancia y la feminidad en cada detalle.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl border border-pink-100 shadow-md">
+                    <h3 class="text-brand-pink-dark font-bold uppercase text-sm mb-5 tracking-wider">Información Corporativa</h3>
+                    <ul class="space-y-4 text-sm text-gray-600">
+                        <li><strong class="text-gray-900">Razón social:</strong> FUNDACIÓN CORAZÓN DE CAÑA</li>
+                        <li><strong class="text-gray-900">NIT:</strong> 901670559-7</li>
+                        <li><strong class="text-gray-900">Ubicación:</strong> CL 58 NORTE # 3 - 15, Cali - Valle</li>
+                        <li><strong class="text-gray-900">Correo:</strong> ventas@velisse.site</li>
+                        <li><strong class="text-gray-900">Teléfono:</strong> 3044019939</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div x-data="{ active: null }" class="space-y-4">
+                <h2 class="text-3xl sm:text-4xl font-display font-bold text-brand-dark mb-6">Preguntas Frecuentes</h2>
+                
+                <div class="bg-white border border-pink-100 rounded-xl shadow-sm hover:border-brand-pink-light transition">
+                    <button @click="active = active === 1 ? null : 1" class="flex justify-between items-center w-full px-6 py-5 text-left font-bold text-gray-800 focus:outline-none">
+                        ¿Quién opera Velisse?
+                        <svg class="h-5 w-5 text-brand-pink transform transition-transform" :class="{'rotate-180': active === 1}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div class="px-6 py-5 text-gray-600 border-t border-pink-50 text-sm" x-show="active === 1" style="display: none;">
+                        Es operado por FUNDACIÓN CORAZÓN DE CAÑA, NIT 901670559-7.
+                    </div>
+                </div>
+                
+                <div class="bg-white border border-pink-100 rounded-xl shadow-sm hover:border-brand-pink-light transition">
+                    <button @click="active = active === 2 ? null : 2" class="flex justify-between items-center w-full px-6 py-5 text-left font-bold text-gray-800 focus:outline-none">
+                        ¿Dónde están ubicados?
+                        <svg class="h-5 w-5 text-brand-pink transform transition-transform" :class="{'rotate-180': active === 2}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div class="px-6 py-5 text-gray-600 border-t border-pink-50 text-sm" x-show="active === 2" style="display: none;">
+                        CL 58 NORTE # 3 - 15, Cali - Valle.
+                    </div>
+                </div>
+                
+                <div class="bg-white border border-pink-100 rounded-xl shadow-sm hover:border-brand-pink-light transition">
+                    <button @click="active = active === 3 ? null : 3" class="flex justify-between items-center w-full px-6 py-5 text-left font-bold text-gray-800 focus:outline-none">
+                        ¿Hacen envíos?
+                        <svg class="h-5 w-5 text-brand-pink transform transition-transform" :class="{'rotate-180': active === 3}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div class="px-6 py-5 text-gray-600 border-t border-pink-50 text-sm" x-show="active === 3" style="display: none;">
+                        Sí. Las condiciones de envío disponibles se informan durante el proceso de compra.
+                    </div>
+                </div>
+
+                <div class="bg-white border border-pink-100 rounded-xl shadow-sm hover:border-brand-pink-light transition">
+                    <button @click="active = active === 4 ? null : 4" class="flex justify-between items-center w-full px-6 py-5 text-left font-bold text-gray-800 focus:outline-none">
+                        ¿Cómo funcionan los cambios?
+                        <svg class="h-5 w-5 text-brand-pink transform transition-transform" :class="{'rotate-180': active === 4}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div class="px-6 py-5 text-gray-600 border-t border-pink-50 text-sm" x-show="active === 4" style="display: none;">
+                        Comunícate a nuestras líneas de atención o consulta nuestros términos y condiciones para revisar tu caso.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO (Cierre de Venta) -->
+    <section id="contacto" class="py-24 relative bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl sm:text-5xl font-display font-bold text-brand-dark mb-4">Haz Tu Pedido</h2>
+            <p class="text-gray-600 mb-12 text-lg">Estamos aquí para asesorarte. Completa el formulario y nos comunicaremos contigo lo más pronto posible.</p>
+            
+            <form action="mailto:ventas@velisse.site" method="POST" enctype="text/plain" class="bg-white p-8 sm:p-12 rounded-3xl border border-pink-100 shadow-xl shadow-pink-100/50 text-left max-w-2xl mx-auto">
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Nombre completo</label>
+                    <input type="text" name="nombre" required class="w-full bg-gray-50 border border-pink-100 text-gray-900 rounded-xl p-4 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Correo electrónico</label>
+                        <input type="email" name="correo" required class="w-full bg-gray-50 border border-pink-100 text-gray-900 rounded-xl p-4 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Teléfono</label>
+                        <input type="tel" name="telefono" required class="w-full bg-gray-50 border border-pink-100 text-gray-900 rounded-xl p-4 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition">
+                    </div>
+                </div>
+                <div class="mb-8">
+                    <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">Prenda de interés o Mensaje</label>
+                    <textarea name="mensaje" rows="4" required class="w-full bg-gray-50 border border-pink-100 text-gray-900 rounded-xl p-4 focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition resize-none"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-brand-pink text-white font-bold py-4 rounded-full hover:bg-brand-pink-dark transition uppercase text-lg shadow-md shadow-pink-200">
+                    ENVIAR MENSAJE
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER LEGAL MINIMALISTA -->
+    <footer class="bg-brand-dark py-16 border-t border-brand-dark text-center text-sm text-gray-400">
+        <div class="max-w-6xl mx-auto px-4">
+            <p class="font-display font-bold text-white text-2xl mb-4">Velisse</p>
+            <p class="mb-8 text-gray-300 leading-relaxed max-w-lg mx-auto">Operado por FUNDACIÓN CORAZÓN DE CAÑA. NIT 901670559-7.<br>CL 58 NORTE # 3 - 15, Cali - Valle.<br>ventas@velisse.site | 3044019939</p>
+            
+            <div class="flex flex-wrap justify-center gap-6 mb-10">
+                <button @click.prevent="showTerms = true" class="hover:text-brand-pink transition underline underline-offset-4">Términos y Condiciones</button>
+                <button @click.prevent="showPrivacy = true" class="hover:text-brand-pink transition underline underline-offset-4">Política de Privacidad</button>
+            </div>
+            
+            <p class="text-xs">&copy; 2026 Velisse. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- COOKIE BANNER -->
+    <div x-show="showCookieBanner" style="display: none;" class="fixed bottom-0 inset-x-0 p-4 z-[60] bg-white border-t border-pink-100 shadow-2xl">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-sm text-gray-600">
+                Utilizamos cookies propias y de terceros para analítica web y publicidad (categorías: necesarias, analítica y publicidad).
+                <button @click="showPrivacy = true" class="underline text-brand-pink-dark hover:text-brand-pink">Política de privacidad</button>.
+            </p>
+            <div class="flex gap-2 shrink-0">
+                <button @click="localStorage.setItem('cookie_consent', 'true'); localStorage.setItem('cookie_consent_ads', 'true'); showCookieBanner = false; if(typeof initPixel === 'function') initPixel();" class="px-5 py-2.5 bg-brand-pink text-white text-xs font-bold rounded-full uppercase shadow-sm">Aceptar</button>
+                <button @click="localStorage.setItem('cookie_consent', 'true'); localStorage.setItem('cookie_consent_ads', 'false'); showCookieBanner = false;" class="px-5 py-2.5 bg-gray-100 text-gray-600 text-xs font-bold rounded-full uppercase hover:bg-gray-200">Rechazar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: TÉRMINOS Y CONDICIONES -->
+    <div x-show="showTerms" style="display: none;" class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6" x-transition.opacity>
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-brand-dark/50 backdrop-blur-sm" @click="showTerms = false"></div>
+        <!-- Modal Content -->
+        <div class="relative w-full max-w-4xl max-h-[85vh] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+            <div class="p-6 border-b border-pink-100 flex justify-between items-center bg-white z-10">
+                <h2 class="text-2xl font-display font-bold text-brand-dark">Términos y Condiciones</h2>
+                <button @click="showTerms = false" class="text-gray-400 hover:text-brand-pink transition">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <div class="p-8 overflow-y-auto text-gray-600 text-sm space-y-5">
+                <div class="bg-pink-50 p-4 rounded-lg text-brand-pink-dark">
+                    <p><strong>FUNDACIÓN CORAZÓN DE CAÑA</strong><br>NIT: 901670559-7<br>CL 58 NORTE # 3 - 15, Cali - Valle<br>Correo: ventas@velisse.site | Teléfono: 3044019939</p>
+                </div>
+                <h3 class="text-brand-dark font-bold text-base mt-6">1. Identificación del negocio</h3>
+                <p>El presente sitio web es operado por FUNDACIÓN CORAZÓN DE CAÑA (en adelante, "la Empresa"), con NIT 901670559-7, y domicilio en CL 58 NORTE # 3 - 15, Cali - Valle. La marca comercial asociada es "Velisse".</p>
+                <h3 class="text-brand-dark font-bold text-base mt-4">2. Uso del sitio</h3>
+                <p>Al acceder o utilizar este Sitio Web, el usuario acepta expresamente estos Términos y Condiciones. El usuario se compromete a realizar un uso lícito y adecuado de la plataforma.</p>
+                <h3 class="text-brand-dark font-bold text-base mt-4">3. Productos</h3>
+                <p>Se exhiben prendas de moda, accesorios y joyería. Las imágenes son de referencia. Hacemos lo posible por mostrar los productos con exactitud, pero pueden existir ligeras variaciones de color según la pantalla del usuario.</p>
+                <h3 class="text-brand-dark font-bold text-base mt-4">4. Precios</h3>
+                <p>Los precios están en Pesos Colombianos (COP) e incluyen impuestos aplicables. Los costos de envío se calcularán por separado al momento de la compra.</p>
+                <h3 class="text-brand-dark font-bold text-base mt-4">5. Disponibilidad y Pedidos</h3>
+                <p>Todo pedido está sujeto a la disponibilidad del inventario. Para formalizar un pedido, el usuario deberá seguir el proceso de contacto/compra establecido. Los pagos se procesan a través de medios autorizados, incluyendo plataformas de pago seguro o pago contraentrega cuando esté disponible.</p>
+                <h3 class="text-brand-dark font-bold text-base mt-4">6. Envíos y Entregas</h3>
+                <p>Los despachos se realizan mediante transportadoras nacionales. Las condiciones, cobertura y costos serán detallados durante el proceso de compra. El usuario debe proveer una dirección completa y correcta.</p>
+                <h3 class="text-brand-dark font-bold text-base mt-4">7. Cambios, Devoluciones y Retracto</h3>
+                <p>El usuario puede solicitar cambios de productos comunicándose a nuestras líneas de atención. Toda prenda debe devolverse en perfecto estado. En cumplimiento del Estatuto del Consumidor en Colombia, el usuario tiene derecho a retractarse de la compra en los plazos de ley (5 días hábiles), asumiendo los costos de envío de retorno.</p>
+                <h3 class="text-brand-dark font-bold text-base mt-4">8. Garantías y Propiedad Intelectual</h3>
+                <p>Otorgamos garantía legal por defectos de fábrica. Los contenidos del sitio (textos, imágenes, logos) son propiedad exclusiva de la Empresa y están protegidos por leyes de derechos de autor.</p>
+                <h3 class="text-brand-dark font-bold text-base mt-4">9. Protección de datos y Responsabilidad</h3>
+                <p>El tratamiento de los datos personales suministrados por el usuario se rige por nuestra Política de privacidad. La Empresa no será responsable por interrupciones técnicas del sitio web o eventos de fuerza mayor.</p>
+            </div>
+            <div class="p-6 border-t border-pink-100 text-right bg-white">
+                <button @click="showTerms = false" class="px-8 py-3 bg-brand-pink text-white font-bold uppercase rounded-full text-sm hover:bg-brand-pink-dark transition shadow-md">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: POLÍTICA DE PRIVACIDAD -->
+    <div x-show="showPrivacy" style="display: none;" class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6" x-transition.opacity>
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-brand-dark/50 backdrop-blur-sm" @click="showPrivacy = false"></div>
+        <!-- Modal Content -->
+        <div class="relative w-full max-w-4xl max-h-[85vh] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+            <div class="p-6 border-b border-pink-100 flex justify-between items-center bg-white z-10">
+                <h2 class="text-2xl font-display font-bold text-brand-dark">Política de Privacidad</h2>
+                <button @click="showPrivacy = false" class="text-gray-400 hover:text-brand-pink transition">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <div class="p-8 overflow-y-auto text-gray-600 text-sm space-y-5">
+                <div class="bg-pink-50 p-4 rounded-lg text-brand-pink-dark">
+                    <p><strong>Responsable:</strong> FUNDACIÓN CORAZÓN DE CAÑA<br>NIT: 901670559-7<br>CL 58 NORTE # 3 - 15, Cali - Valle<br>Correo: ventas@velisse.site | Teléfono: 3044019939</p>
+                </div>
+                <h3 class="text-brand-dark font-bold text-base mt-6">1. Responsable del tratamiento</h3>
+                <p>La protección de sus datos está a cargo de FUNDACIÓN CORAZÓN DE CAÑA, entidad operadora de la marca Velisse.</p>
+                <h3 class="text-brand-dark font-bold text-base mt-4">2. Datos recopilados</h3>
+                <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                    <li><strong>Formularios:</strong> Nombres, correo electrónico, teléfono, ciudad y mensaje.</li>
+                    <li><strong>Pedidos:</strong> Información de facturación, dirección de envío y datos de contacto.</li>
+                    <li><strong>Cookies y Analítica:</strong> Datos de navegación e interacciones en el sitio web.</li>
+                </ul>
+                <h3 class="text-brand-dark font-bold text-base mt-4">3. Publicidad y Meta Pixel</h3>
+                <p>En caso de instalar herramientas de seguimiento como Meta Pixel, se recopilará información sobre acciones en la página. Esto se hace con fines de medición y publicidad. Las cookies publicitarias opcionales solo se activarán previo consentimiento del usuario a través de nuestro banner de cookies.</p>
+                <h3 class="text-brand-dark font-bold text-base mt-4">4. Finalidades</h3>
+                <p>Los datos son usados para: procesar pedidos, despachar productos, atención al cliente, comunicaciones comerciales (previo consentimiento), facturación y análisis estadístico.</p>
+                <h3 class="text-brand-dark font-bold text-base mt-4">5. Terceros y Seguridad</h3>
+                <p>Podemos compartir datos necesarios con empresas transportadoras y pasarelas de pago. No vendemos datos a terceros. Implementamos protocolos seguros (HTTPS) y prácticas organizacionales para proteger la información de pérdida o acceso no autorizado.</p>
+                <h3 class="text-brand-dark font-bold text-base mt-4">6. Derechos del usuario</h3>
+                <p>Como titular, tiene derecho a conocer, actualizar, rectificar y eliminar sus datos. Puede enviar sus solicitudes al correo ventas@velisse.site.</p>
+            </div>
+            <div class="p-6 border-t border-pink-100 text-right bg-white">
+                <button @click="showPrivacy = false" class="px-8 py-3 bg-brand-pink text-white font-bold uppercase rounded-full text-sm hover:bg-brand-pink-dark transition shadow-md">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
